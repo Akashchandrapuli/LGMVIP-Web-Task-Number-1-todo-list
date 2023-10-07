@@ -1,17 +1,40 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+let input = document.querySelector(".entered-list");
+let addBtn = document.querySelector(".add-list");
+let tasks = document.querySelector(".tasks");
+input.addEventListener("keyup", () => {
+  if (input.value.trim() != 0) {
+    addBtn.classList.add("active");
+  } else {
+    addBtn.classList.remove("active");
+  }
+});
+//add new item to list
+addBtn.addEventListener("click", () => {
+  if (input.value.trim() != 0) {
+    let newItem = document.createElement("div");
+    newItem.classList.add("item");
+    newItem.innerHTML = `
+    <p> ${input.value} </p>
+    <div class="item-btn">
+    <i class="fa-solid fa-pen-to-square"></i>
+    <i class="fa-solid fa-xmark"></i>
+    </div>
+    `;
+    tasks.appendChild(newItem);
+    input.value = "";
+  } else {
+    alert("Please enter a task");
+  }
+});
+//delete items from list
+tasks.addEventListener("click", (e) => {
+  if (e.target.classList.contains("fa-xmark")) {
+    e.target.parentElement.parentElement.remove();
+  }
+});
+//mark item as complete
+tasks.addEventListener("click", (e) => {
+  if (e.target.classList.contains("fa-pen-to-square")) {
+    e.target.parentElement.parentElement.classList.toggle("completed");
+  }
+});
